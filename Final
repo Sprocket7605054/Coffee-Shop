@@ -1,0 +1,109 @@
+class Node: 
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class Linked:
+    def __init__(self):
+        self.head = None 
+    
+    def Index(self,index):
+        current_node = self.head
+        position = 0
+        while current_node is not None and position != index:
+            position += 1
+            current_node = current_node.next
+        return current_node
+
+    def insertAtBegin(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        else:
+            new_node.next = self.head
+            self.head = new_node
+
+    def insertAtIndex(self, data, index):
+            new_node = Node(data)
+            current_node = self.head
+            position = 0
+            if position == index:
+                self.insertAtBegin(data)
+            else:
+                while(current_node != None and position+1 != index):
+                    position = position+1
+                    current_node = current_node.next
+    
+                if current_node != None:
+                    new_node.next = current_node.next
+                    current_node.next = new_node
+                else:
+                    print("Index not present")
+
+    def insertAtEnd(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+    
+        current_node = self.head
+        while(current_node.next):
+            current_node = current_node.next
+    
+        current_node.next = new_node
+
+    def updateNode(self, val, index):
+        current_node = self.head
+        position = 0
+        if position == index:
+            current_node.data = val
+        else:
+            while(current_node != None and position != index):
+                position = position+1
+                current_node = current_node.next
+    
+            if current_node != None:
+                current_node.data = val
+            else:
+                print("Index not present")
+
+    def remove_first_node(self):
+        if(self.head == None):
+            return
+        
+        self.head = self.head.next
+    
+    def print_heights(self):
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
+
+    def give_data(self):
+        current= self.head
+        return current.data
+
+def coffee():
+    Coffeeline = Linked()
+    Coffeeorder = Linked()
+    true = True
+    #first print line so it qosent print none in queue
+    print("Welcome to the coffee shop. Do you want to place an order(y/n)\n===========Coffee Shop============\n")
+    while true:
+        #option pick
+        Opt = input()
+        if Opt.lower() in ["y","yes"] or (Opt == "1"):
+            Coffeeorder.insertAtEnd(input("Type in the drink that you want.\n"))
+            Coffeeline.insertAtEnd(input('Please type in your name:\n'))
+        if Opt.lower() in ["n","no"] or (Opt == "0"):
+            Working = input("Did the coffee shop complete an order¿(y/n)\n")
+            if Working.lower() in ['y', 'yes'] or (Working == "1"):
+                Name = Coffeeline.give_data()
+                Drink = Coffeeorder.give_data()
+                print(f"\n{Name}'s order of {Drink} is ready.\n")
+                Coffeeline.remove_first_node()
+                Coffeeorder.remove_first_node()
+        print("Welcome to the coffee shop. Do you want to place an order(y/n)\n===========Coffee Shop============\nThe queue of the coffee shop is:"), Coffeeline.print_heights()
+
+coffee()
